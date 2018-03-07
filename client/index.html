@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form action="#">
+        <input id="inputPost" name="post" type="text">
+        <button type="submit"></button>
+    </form>
+    <form action="">
+        <input id="search" type="text">
+        <button id="searchbutton" type="button"></button>
+    </form>
+    <div id="1">
+        
+    </div>
+    <div id="2">
+
+    </div>
+</body>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <script>
+
+        $.ajax({
+            url:'http://localhost:3000/oauth',
+            type: 'GET',
+             success: function(result){
+                result.forEach(function(each){
+                     template =`
+                    <h1>${each.id}</h1>
+                     <h4>${each.name}</h4>
+                            `
+                    $('#1').append(template);
+                })
+        }});
+    
+
+        $('button').click(function(){
+            let obj = {
+                post : $('#inputPost').val(),
+            }
+            $.ajax({
+                url:'http://localhost:3000/oauth/post',
+                type: 'POST',
+                data: obj,
+                dataType: 'json',
+                success: function(result){
+                    window.location.href = '/oauth'
+                }
+            })
+        })
+
+        $('#searchbutton').click(function(){
+            $.ajax({
+                url: 'http://localhost:3000/oauth/search'
+            })
+        })
+    
+  </script>
+</html>
